@@ -22,37 +22,17 @@ pipeline {
             }
         }
 
-        stage('Build Docker Images') {
+  stage('Build Docker Images') {
             steps {
-                echo "Building Docker images..."
                 sh 'docker compose build'
             }
         }
 
         stage('Run Containers') {
             steps {
-                echo "Starting containers..."
-                sh 'docker compose up -d'
+                sh 'docker compose up'
             }
         }
 
-        stage('Run Migrations') {
-            steps {
-                echo "Running Django migrations..."
-                sh 'docker compose exec backend python manage.py migrate || true'
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline executed successfully 🚀'
-        }
-        failure {
-            echo 'Pipeline failed ❌'
-        }
-        always {
-            echo 'Build finished.'
-        }
     }
 }
