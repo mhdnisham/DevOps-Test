@@ -15,13 +15,12 @@ pipeline {
             }
         }
 
-        stage('Stop Old Containers') {
+       stage('Django Checks') {
             steps {
-                echo "Stopping existing containers..."
-                sh 'docker compose down || true'
+                sh 'docker compose run backend python manage.py check'
             }
         }
-
+        
   stage('Build Docker Images') {
             steps {
                 sh 'docker compose build'
